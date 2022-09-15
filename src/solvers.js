@@ -16,7 +16,36 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  var board = new Board({n: n});
+  var solution;
+  var needToBePlaced = n;
+
+  for (var row = 0; row < n; row++) {
+    for (var col = 0; col < n; col++) {
+      if (board.attributes[row][col] === 0) {
+        board.attributes[row][col] = 1;
+
+        // if (!board.hasAnyRowConflicts() && !board.hasAnyColConflicts()) {
+        //   needToBePlaced--;
+        //   if (needToBePlaced === 0) {
+        //     solution = board.rows();
+        //   }
+        // } else {
+        //   board.attributes[row][col] = 0;
+        // }
+
+        if (!board.hasAnyRooksConflicts()) {
+          needToBePlaced--;
+          if (needToBePlaced === 0) {
+            solution = board.rows();
+            console.log('solution', solution);
+          }
+        } else {
+          board.attributes[row][col] = 0;
+        }
+      }
+    }
+  }
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
