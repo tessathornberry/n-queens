@@ -8,9 +8,9 @@
 
     initialize: function (params) {
       if (_.isUndefined(params) || _.isNull(params)) {
-        console.log('Good guess! But to use the Board() constructor, you must pass it an argument in one of the following formats:');
-        console.log('\t1. An object. To create an empty board of size n:\n\t\t{n: %c<num>%c} - Where %c<num> %cis the dimension of the (empty) board you wish to instantiate\n\t\t%cEXAMPLE: var board = new Board({n:5})', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
-        console.log('\t2. An array of arrays (a matrix). To create a populated board of size n:\n\t\t[ [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...] ] - Where each %c<val>%c is whatever value you want at that location on the board\n\t\t%cEXAMPLE: var board = new Board([[1,0,0],[0,1,0],[0,0,1]])', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
+        // console.log('Good guess! But to use the Board() constructor, you must pass it an argument in one of the following formats:');
+        // console.log('\t1. An object. To create an empty board of size n:\n\t\t{n: %c<num>%c} - Where %c<num> %cis the dimension of the (empty) board you wish to instantiate\n\t\t%cEXAMPLE: var board = new Board({n:5})', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
+        // console.log('\t2. An array of arrays (a matrix). To create a populated board of size n:\n\t\t[ [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...] ] - Where each %c<val>%c is whatever value you want at that location on the board\n\t\t%cEXAMPLE: var board = new Board([[1,0,0],[0,1,0],[0,0,1]])', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
       } else if (params.hasOwnProperty('n')) {
         this.set(makeEmptyMatrix(this.get('n')));
       } else {
@@ -82,10 +82,10 @@
       var sum = 0;
       var currentRow = this.attributes[rowIndex];
       for (var col = 0; col < currentRow.length; col++) {
+        sum += currentRow[col];
         if (sum > 1) {
           return true;
         }
-        sum += currentRow[col];
       }
 
       return false;
@@ -113,10 +113,10 @@
       //colIndex = 0, 1, 2, 3
       for (var i = 0; i < this.attributes.n; i++) {
         var currentRow = this.attributes[i];
+        sum += currentRow[colIndex];
         if (sum > 1) {
           return true;
         }
-        sum = sum + currentRow[colIndex];
       }
       return false;
 
@@ -160,8 +160,9 @@
       }
 
       return false;
-    },
 
+
+    },
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       for (var i = (this.attributes.n * -1) + 2; i < this.attributes.n - 1; i++) {
@@ -170,6 +171,15 @@
         }
       }
       return false;
+      // var size = this.get('n');
+
+      // for ( var i = 1 - size; i < size; i++ ) {
+      //   if ( this.hasMajorDiagonalConflictAt(i) ) {
+      //     return true;
+      //   }
+      // }
+
+      // return false;
     },
 
 
@@ -202,17 +212,40 @@
       }
 
       return false;
+      // var size = this.get('n');
+      // var count = 0;
+      // var rowIdx = 0;
+      // var colIdx = minorDiagonalColumnIndexAtFirstRow;
+
+      // for ( ; rowIdx < size && colIdx >= 0; rowIdx++, colIdx-- ) {
+      //   if ( colIdx < size ) {
+      //     var row = this.get(rowIdx);
+      //     count += row[colIdx];
+      //   }
+      // }
+
+      // return count > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      for (var i = this.attributes.n + 1; i > 0; i--) {
+      for (var i = (this.attributes.n * 2 ) - 1; i >= 0; i--) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
         }
       }
       return false;
-    }
+    },
+
+    // var size = this.get('n');
+    //   for ( var i = (size * 2) - 1; i >= 0; i-- ) {
+    //     if ( this.hasMinorDiagonalConflictAt(i) ) {
+    //       return true;
+    //     }
+    //   }
+
+    //   return false;
+    // }
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
@@ -229,5 +262,5 @@
 
 }());
 
-var board = new Board({n: 5});
-console.log(board);
+// var board = new Board({n: 5});
+// console.log(board);
