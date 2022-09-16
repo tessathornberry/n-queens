@@ -96,7 +96,7 @@ window.findNQueensSolution = function(n) {
   });
   // If no solution exists, return the original unaltered board
   solution = solution || board.rows();
-
+  //could look at this more
   // var needToBePlaced = n;
   // for (var row = 0; row < n; row++) {
   //   for (var col = 0; col < n; col++) {
